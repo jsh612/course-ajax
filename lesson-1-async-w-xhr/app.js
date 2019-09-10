@@ -13,6 +13,9 @@
         const unsplashRequest = new XMLHttpRequest();
         unsplashRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
         unsplashRequest.onload = addImage;
+        unsplashRequest.onerror = function (err) {
+            console.log('error', err);
+        };
         unsplashRequest.setRequestHeader('Authorization', 'Client-ID 87f6af0e48b96fa00ecf0ab1b0c5f07cb2de10606deba9189b1a2ae3ea8dd3c5');
         unsplashRequest.send();
         
@@ -36,6 +39,9 @@
         const articleRequest = new XMLHttpRequest();
         articleRequest.open('GET', `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=0Z14yF82dhkBNmCQIGCpGxMtFIl0fZ5C`);
         articleRequest.onload = addArticles;
+        articleRequest.onerror = function (err) {
+            console.log('error', err);
+        };
         articleRequest.send();
         // 뉴욕타임즈는 별도의 header를 요구하지 않으므로 setRequestHeade 불필요
 
@@ -43,7 +49,7 @@
         function addArticles() {
             // debugger
             //하단 코드 작성전에 debugger 를 통해 수신되는 값 알아내기
-            
+
             let htmlConent = '';
             const data = JSON.parse(this.responseText);
             console.log('data', data);
