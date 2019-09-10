@@ -23,7 +23,7 @@
         function addImage() {
             // debugger
             //하단 코드 작성전에 debugger 를 통해 수신되는 값 알아내기
-
+            console.log("this", this)
             const data = JSON.parse(this.responseText);
             const firstImage = data.results[0];
 
