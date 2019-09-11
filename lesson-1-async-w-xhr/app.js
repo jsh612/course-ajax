@@ -21,16 +21,20 @@
         
         //addImage 작성
         function addImage() {
-            // debugger
-            //하단 코드 작성전에 debugger 를 통해 수신되는 값 알아내기
-            console.log("this", this)
+            // 하단 코드 작성전에 debugger 를 통해 수신되는 값 알아내기
+            console.log('this', this);
             const data = JSON.parse(this.responseText);
             const firstImage = data.results[0];
+            let htmlConent;
 
-            let htmlConent = `<figure>
-                <img src="${firstImage.urls.regular}" alt="${searchedForText}">
-                <figcaption>${searchedForText} by ${firstImage.user.name}</figcaption>
-            </figure>`;
+            if (firstImage) {
+                htmlConent = `<figure>
+                    <img src="${firstImage.urls.regular}" alt="${searchedForText}">
+                    <figcaption>${searchedForText} by ${firstImage.user.name}</figcaption>
+                </figure>`;
+            } else {
+                htmlConent = `<div class="error-no-articles">No "${searchedForText}" Image available</div>`;
+            }
 
             responseContainer.insertAdjacentHTML('afterbegin', htmlConent);
         }
@@ -54,7 +58,7 @@
             const data = JSON.parse(this.responseText);
             console.log('data', data);
             if (data.response && data.response.docs && data.response.docs.length > 1) {
-                console.log(7777)
+                console.log('뉴스 수신 완료');
                 htmlConent = '<ul>' + data.response.docs.map(article => `<li class="article">
                 <h2><a href="${article.web_url}">${article.headline.main}</a></h2>
                 <p>${article.snippet}</p>
